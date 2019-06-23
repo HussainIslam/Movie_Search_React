@@ -1,6 +1,8 @@
-import React from 'react'
-import Movie from './Movie'
-import getData from '../fetchData'
+import React from 'react';
+import Movie from './Movie';
+import getData from '../fetchData';
+
+import './Movies.css';
 
 export default class extends React.Component{
     constructor(props){

@@ -1,8 +1,11 @@
+import React from 'react'
 import Title from './Title'
 import Poster from './Poster'
 import Rating from './Rating'
 import Description from './Description'
-import React from 'react'
+
+import './Movie.css'
+
 
 
 export default (props)=>{
