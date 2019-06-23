@@ -23,7 +23,6 @@ export default class extends React.Component{
                 loading: false, 
                 movieList: response
             })
-            console.log(this.state.movieList);
 
         }
         catch(error){
@@ -33,6 +32,7 @@ export default class extends React.Component{
     }
 
     render(){
+        
         if(this.state.errored){
             return(
                 <div>

@@ -1,0 +1,43 @@
+/*  Webpage Elements  */
+
+body{
+  margin-left: 0;
+  margin-right:0;
+  padding:0;
+}
+
+h1{
+  margin-top: 2%;
+  color: black;
+  text-align: center;
+}
+
+
+/*  Webpage Classes   */
+.searchBox{
+  align-content: center;
+  /*border: 1px solid red;*/
+  width: 90%;
+  text-align: center;
+}
+
+.curly{
+  color: goldenrod;
+}
+
+
+
+
+
+.smallImage{
+  /*max-width: 100px;*/
+}
+
+
+
+
+
+
+/*  Webpage IDs   */
+
+
