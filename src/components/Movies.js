@@ -1,4 +1,5 @@
 import React from 'react'
+import Movie from './Movie'
 import getData from '../fetchData'
 
 export default class extends React.Component{
@@ -11,18 +12,22 @@ export default class extends React.Component{
             searchString: null,
             currentPage: 1,
             movieList: null
-        }
+        };
     }
 
     async componentDidMount(){
         try{
-            this.setState({laoding: true});
+            this.setState({loading: true});
             const response = await getData();
-            console.log(response);
+            await this.setState({
+                loading: false, 
+                movieList: response
+            })
+            console.log(this.state.movieList);
 
         }
         catch(error){
-
+            console.error(error);
         }
 
     }
@@ -44,11 +49,21 @@ export default class extends React.Component{
             );
         }
 
-        return (
-            <div>
-                <p>These are the movies</p>
-            </div>
+        if(this.state.movieList == null){
+            return(
+                <div>
+                    <p>This is still loading...</p>
+                </div>
+            );
+        }
+
+        return this.state.movieList.map(movie=>
+            <Movie 
+                key={movie.id} 
+                movie={movie} 
+            />
         );
+        
         
     }
 
