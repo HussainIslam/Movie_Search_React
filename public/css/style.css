@@ -6,20 +6,16 @@ body{
   padding:0;
 }
 
-h1{
-  margin-top: 2%;
+#pageHeading{
+  margin-top: 20px;
   color: black;
   text-align: center;
+
 }
 
 
 /*  Webpage Classes   */
-.searchBox{
-  align-content: center;
-  /*border: 1px solid red;*/
-  width: 90%;
-  text-align: center;
-}
+
 
 .curly{
   color: goldenrod;

@@ -10,11 +10,16 @@ import './Movie.css'
 
 export default (props)=>{
     return(
-        <div>
-            <Poster key={props.movie.poster_path} poster={props.movie.poster_path} />
-            <Title key={props.movie.title} title={props.movie.title} />
-            <Rating rating={props.movie.vote_average} />
-            <Description description={props.movie.overview} />
+        <div className="container">
+            <div>
+                <Poster key={props.movie.poster_path} poster={props.movie.poster_path} />
+            </div>
+            <div>
+                <Rating rating={props.movie.vote_average} />
+                <Title key={props.movie.title} title={props.movie.title} />
+                <Description description={props.movie.overview} />
+
+            </div>
         </div>
 
     );

@@ -1,6 +1,11 @@
-.searchbox{
+#search{
   align-content: center;
-  /*border: 1px solid red;*/
   width: 90%;
   text-align: center;
+  margin-top: 30px;
+}
+
+#searchdiv{
+  display: flex;
+  justify-content: center;
 }

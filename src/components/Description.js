@@ -4,7 +4,7 @@ import './Description.css'
 export default function (props){
     return(
         <div>
-            <p>{props.description}</p>
+            <p id="description">{props.description}</p>
         </div>
     );
 }
