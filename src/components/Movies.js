@@ -18,12 +18,16 @@ export default class extends React.Component{
     }
 
     async componentDidMount(){
+        this.setState({searchString: this.props.string},()=>console.log(this.props.string));
         await this.loadData(this.props);
     }
 
     async shouldComponentUpdate(nextProps, nextState){
-        console.log(nextProps.string);
-        return nextProps.string != null;
+        return nextProps.string !== this.props.string;
+    }
+
+    async componentWillReceiveProps(nextProps){
+        this.loadData(nextProps);
     }
 
     async loadData(props){
@@ -31,7 +35,7 @@ export default class extends React.Component{
             this.setState({ loading: true });
             let response;
             if(props.string){
-                response = await getData(this.state.currentPage, true, this.state.searchString);
+                response = await getData(this.state.currentPage, true, props.string);
             }
             else {
                 response = await getData(this.state.currentPage, false);
@@ -39,14 +43,13 @@ export default class extends React.Component{
             this.setState({
                 loading: false,
                 movieList: response,
-            })
+            });
         }
         catch(error){
             console.log(error);
         }
     }
 
-   
     render(){
         if(this.state.errored){
             return(
