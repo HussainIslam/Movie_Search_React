@@ -1,6 +1,8 @@
 import React from 'react';
 import Movie from './Movie';
+import _ from 'lodash';
 import getData from '../fetchData';
+
 
 import './Movies.css';
 
@@ -12,13 +14,14 @@ export default class extends React.Component{
             errored: false,
             search: false,
             searchString: null,
+            scrollPosition: null,
             currentPage: 1,
-            movieList: null
+            movieList: []
         };
     }
 
     async componentDidMount(){
-        this.setState({searchString: this.props.string},()=>console.log(this.props.string));
+        this.setState({searchString: this.props.string, scrollPosition: window.scrollY});
         await this.loadData(this.props);
     }
 
@@ -31,18 +34,26 @@ export default class extends React.Component{
     }
 
     async loadData(props){
+        console.log(props);
         try{
             this.setState({ loading: true });
             let response;
+            let newList
             if(props.string){
+                console.log("this is captain");
+                this.setState({ searchString: props.string });
                 response = await getData(this.state.currentPage, true, props.string);
+                newList = this.state.movieList.concat(response);
+                this.setState({movieList: []});
             }
             else {
                 response = await getData(this.state.currentPage, false);
+                newList = this.state.movieList.concat(response);
+                this.setState({movieList: []});
             }
             this.setState({
                 loading: false,
-                movieList: response,
+                movieList: newList,
             });
         }
         catch(error){
@@ -50,7 +61,29 @@ export default class extends React.Component{
         }
     }
 
+    updatePageNumber(){
+        let page = this.state.currentPage;
+        page++;
+        this.setState({ currentPage: page });
+    }
+
+    async scrollEvent(e){
+        if(window.scrollY !== this.state.scrollPosition){
+            this.setState({ scrollPosition: window.scrollY }, async () =>{
+                if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
+                    this.updatePageNumber();
+                    const data = await this.loadData({string: this.state.searchString});
+                    //console.log('await ',data);
+                }
+            });
+
+        }
+    }
+
+
+
     render(){
+        window.addEventListener('scroll', _.throttle(this.scrollEvent.bind(this), 2000, {'leading': true}));
         if(this.state.errored){
             return(
                 <div>
@@ -86,3 +119,4 @@ export default class extends React.Component{
     }
 
 }
+
