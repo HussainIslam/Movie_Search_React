@@ -38,27 +38,30 @@ export default class extends React.Component{
         try{
             this.setState({ loading: true });
             let response;
-            let newList
+            //let newList = [];
             if(props.string){
                 console.log("this is captain");
                 this.setState({ searchString: props.string });
                 response = await getData(this.state.currentPage, true, props.string);
-                newList = this.state.movieList.concat(response);
-                this.setState({movieList: []});
             }
             else {
                 response = await getData(this.state.currentPage, false);
-                newList = this.state.movieList.concat(response);
-                this.setState({movieList: []});
             }
+            console.log(response);
+            //this.updateMovieList(response);
             this.setState({
                 loading: false,
-                movieList: newList,
+                movieList: response
             });
         }
         catch(error){
             console.log(error);
         }
+    }
+
+    updateMovieList(response){
+        let newList = this.state.movieList.concat(response)
+        this.setState({movieList: newList});
     }
 
     updatePageNumber(){
@@ -71,8 +74,8 @@ export default class extends React.Component{
         if(window.scrollY !== this.state.scrollPosition){
             this.setState({ scrollPosition: window.scrollY }, async () =>{
                 if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
-                    this.updatePageNumber();
-                    const data = await this.loadData({string: this.state.searchString});
+                    let page = 
+                    await this.loadData({string: this.state.searchString});
                     //console.log('await ',data);
                 }
             });
