@@ -18,23 +18,36 @@ export default class extends React.Component{
     }
 
     async componentDidMount(){
-        try{
-            this.setState({loading: true});
-            const response = await getData();
-            await this.setState({
-                loading: false, 
-                movieList: response
-            })
-
-        }
-        catch(error){
-            console.error(error);
-        }
-
+        await this.loadData(this.props);
     }
 
+    async shouldComponentUpdate(nextProps, nextState){
+        console.log(nextProps.string);
+        return nextProps.string != null;
+    }
+
+    async loadData(props){
+        try{
+            this.setState({ loading: true });
+            let response;
+            if(props.string){
+                response = await getData(this.state.currentPage, true, this.state.searchString);
+            }
+            else {
+                response = await getData(this.state.currentPage, false);
+            }
+            this.setState({
+                loading: false,
+                movieList: response,
+            })
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+   
     render(){
-        
         if(this.state.errored){
             return(
                 <div>
